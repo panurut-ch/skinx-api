@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class TagPostDto {
+export class SearchPostDto {
   @ApiProperty()
-  tag: string;
+  keyword: string;
 
   @ApiProperty()
   page: number;

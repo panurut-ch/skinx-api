@@ -1,15 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreatePostDto {
+export class AllPostDto {
   @ApiProperty()
-  title: string;
+  page: number;
 
   @ApiProperty()
-  content: string;
+  perpage: number;
 
   @ApiProperty()
-  postedAt: Date;
+  sortbycolumn?: string;
 
   @ApiProperty()
-  postedBy: string;
+  orderby?: string;
 }
