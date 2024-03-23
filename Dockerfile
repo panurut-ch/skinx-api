@@ -20,7 +20,7 @@ RUN npx prisma migrate
 RUN npx prisma db seed
 
 # Specifies what command to run within the container
-CMD ["npm", "run", "start", "npx"]
+CMD ["npm", "run", "start"]
 
 # Indicates that the container will listen on port 3000
 EXPOSE 3000
