@@ -1,7 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import * as fs from 'fs';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
+const roundsOfHashing = 10;
 
 async function seedDataFromJson(jsonFilePath: string): Promise<void> {
   try {
@@ -48,10 +50,49 @@ async function seedDataFromJson(jsonFilePath: string): Promise<void> {
     }
 
     console.log('Data seeding completed.');
+
+    // Seed users
+    await seedUsers();
   } catch (error) {
     console.error('Error seeding data:', error);
   } finally {
     await prisma.$disconnect();
+  }
+}
+
+async function seedUsers(): Promise<void> {
+  try {
+    // create two dummy users
+    const passwordPanurut = await bcrypt.hash('password-panurut', roundsOfHashing);
+    const passwordSkinx = await bcrypt.hash('password-skinx', roundsOfHashing);
+
+    const user1 = await prisma.user.upsert({
+      where: { email: 'panurut@panurut.dev' },
+      update: {
+        password: passwordPanurut,
+      },
+      create: {
+        email: 'panurut@panurut.dev',
+        name: 'Panurut Chinakul',
+        password: passwordPanurut,
+      },
+    });
+
+    const user2 = await prisma.user.upsert({
+      where: { email: 'skinx@skinx.com' },
+      update: {
+        password: passwordSkinx,
+      },
+      create: {
+        email: 'skinx@skinx.com',
+        name: 'Skinx App',
+        password: passwordSkinx,
+      },
+    });
+
+    console.log('Users seeding completed.');
+  } catch (error) {
+    console.error('Error seeding users:', error);
   }
 }
 
