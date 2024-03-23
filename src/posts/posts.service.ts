@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../src/prisma/prisma.service';
 import { TagPostDto } from './dto/tag-post.dto';
 import { Prisma } from '@prisma/client';
 import { SearchPostDto } from './dto/search-post.dto';
@@ -10,8 +10,10 @@ import { SearchPostDto } from './dto/search-post.dto';
 export class PostsService {
   constructor(private prisma: PrismaService) {}
 
-  create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
+  async create(createPostDto: CreatePostDto) {
+    return this.prisma.post.create({
+      data: createPostDto,
+    });
   }
 
   findAll() {
@@ -108,11 +110,16 @@ export class PostsService {
     });
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    return this.prisma.post.update({
+      where: { id },
+      data: updatePostDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: number) {
+    return this.prisma.post.delete({
+      where: { id },
+    });
   }
 }
