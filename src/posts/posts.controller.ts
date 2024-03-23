@@ -21,6 +21,8 @@ import {
 } from '@nestjs/swagger';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { AllPostDto } from './dto/all-post.dto';
+import { SearchPostDto } from './dto/search-post.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -40,6 +42,14 @@ export class PostsController {
     return this.postsService.findAll();
   }
 
+  @Post('all')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  findAllPaging(@Body() allPostDto: AllPostDto) {
+    console.log('findAllPaging')
+    return this.postsService.findAllPaging(allPostDto);
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
@@ -53,6 +63,14 @@ export class PostsController {
   findByTag(@Body() tagPostDto: TagPostDto) {
     console.log('findByTag');
     return this.postsService.findByTag(tagPostDto);
+  }
+
+  @Post('/search')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  findByKeyword(@Body() searchPostDto: SearchPostDto) {
+    console.log('findByKeyword');
+    return this.postsService.findByKeyword(searchPostDto);
   }
 
   @Patch(':id')
