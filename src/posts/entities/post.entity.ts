@@ -1,23 +1,23 @@
-// import { Entity, PrimaryGeneratedColumn, Column } from '@nestjs/typeorm';
+import { ApiProperty } from '@nestjs/swagger';
+import { Post } from '@prisma/client';
 
-// @Entity()
-// export class Post {
-//   @PrimaryGeneratedColumn()
-//   id: number;
+export class PostEntity implements Post {
+  constructor(partial: Partial<PostEntity>) {
+    Object.assign(this, partial);
+  }
 
-//   @Column()
-//   title: string;
+  @ApiProperty()
+  id: number;
 
-//   @Column()
-//   content: string;
+  @ApiProperty()
+  title: string;
 
-//   @Column()
-//   postedAt: Date;
+  @ApiProperty()
+  content: string;
 
-//   @Column()
-//   postedBy: string;
+  @ApiProperty()
+  postedAt: Date;
 
-//   // Assuming tags are stored as a comma-separated string in the database
-//   @Column()
-//   tags: string;
-// }
+  @ApiProperty()
+  postedBy: string;
+}
