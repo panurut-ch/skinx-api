@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from './../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 // Mock PrismaService
 const mockPrismaService = {

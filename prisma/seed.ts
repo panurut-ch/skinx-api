@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import * as fs from 'fs';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 const roundsOfHashing = 10;
