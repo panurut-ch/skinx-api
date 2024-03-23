@@ -13,25 +13,45 @@ export class AuthService {
   constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
   async login(email: string, password: string): Promise<AuthEntity> {
-    // Step 1: Fetch a user with the given email
     const user = await this.prisma.user.findUnique({ where: { email: email } });
 
-    // If no user is found, throw an error
     if (!user) {
       throw new NotFoundException(`No user found for email: ${email}`);
     }
 
-    // Step 2: Check if the password is correct
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    // If password does not match, throw an error
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid password');
     }
 
-    // Step 3: Generate a JWT containing the user's ID and return it
     return {
       accessToken: this.jwtService.sign({ userId: user.id }),
     };
+  }
+
+  async refreshToken(refreshToken: string): Promise<AuthEntity> {
+    const decodedToken = this.jwtService.verify(refreshToken, {
+      ignoreExpiration: true,
+    });
+
+    if (!decodedToken || !decodedToken.userId) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: decodedToken.userId },
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return {
+      accessToken: this.jwtService.sign({ userId: user.id }),
+    };
+  }
+
+  private generateRefreshToken(userId: number): string {
+    return this.jwtService.sign({ userId }, { expiresIn: '7d' });
   }
 }
