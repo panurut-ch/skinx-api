@@ -15,4 +15,7 @@ export class SearchPostDto {
 
   @ApiProperty()
   orderby?: string;
+
+  @ApiProperty()
+  tag?: string;
 }
