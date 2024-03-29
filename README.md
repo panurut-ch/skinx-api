@@ -3,6 +3,9 @@ This is a [Nest](https://github.com/nestjs/nest) framework TypeScript starter re
 This project for SkinX Test - Software Engineer (Fullstack)
 Developed by Panurut Chinakul
 
+## Database
+- PostgreSQL
+
 ## Library
 - Nest.js
 - Passport.js
