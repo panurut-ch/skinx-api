@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req } from '@nestjs/common';
+import { Request } from 'express'; // Import Request from express
 import { AuthService } from './auth.service';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AuthEntity } from './entity/auth.entity';
@@ -18,7 +19,8 @@ export class AuthController {
 
   @Post('refresh-token')
   @ApiOkResponse({ type: AuthEntity })
-  refreshToken(@Body() { refreshToken }: RefreshTokenDto) {
+  refreshToken(@Req() request: Request) {
+    const refreshToken = request.headers.authorization.split(' ')[1]; // Get the access token from the Authorization header
     return this.authService.refreshToken(refreshToken);
   }
 }

@@ -39,7 +39,16 @@ export class PostsController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   findAll() {
+    console.log('findAll')
     return this.postsService.findAll();
+  }
+
+  @Get('/all-tag')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  findAllTag() {
+    console.log('findAllTag')
+    return this.postsService.findAllTag();
   }
 
   @Post('all')
