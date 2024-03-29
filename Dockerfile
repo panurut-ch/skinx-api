@@ -10,14 +10,14 @@ COPY . .
 # Install the dependencies
 RUN npm install
 
-# Run prisma init
-RUN npx prisma generate
+# # Run prisma init
+# RUN npx prisma generate
 
-# Run migrate
-RUN npx prisma migrate
+# # Run migrate
+# RUN npm run migrate:postgres
 
-# Prisma seed data
-RUN npx prisma db seed
+# # Prisma seed data
+# RUN npx prisma db seed
 
 # Specifies what command to run within the container
 CMD ["npm", "run", "start"]
