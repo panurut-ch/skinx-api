@@ -3,6 +3,15 @@ This is a [Nest](https://github.com/nestjs/nest) framework TypeScript starter re
 This project for SkinX Test - Software Engineer (Fullstack)
 Developed by Panurut Chinakul
 
+## Library
+- Nest.js
+- Passport.js
+- Bcrypt.js
+- Swagger
+- Jest
+- Prisma
+- class-validator
+
 ## How to run local
 ```bash
 npm install
